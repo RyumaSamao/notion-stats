@@ -1,8 +1,0 @@
-{
-  "name": "notion-stats",
-  "version": "1.0.0",
-  "type": "module",
-  "dependencies": {
-    "@notionhq/client": "^3.0.0"
-  }
-}
