@@ -39,6 +39,7 @@ async function run() {
   };
 
   fs.writeFileSync("counts.json", JSON.stringify(data, null, 2));
+  console.log("Counts updated:", data); // 🔹 vérifier les valeurs
 }
 
 run();
