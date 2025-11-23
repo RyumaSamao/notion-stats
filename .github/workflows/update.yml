@@ -1,36 +1,33 @@
 name: Update Notion Stats
 
 on:
-  workflow_dispatch:  # déclenchable manuellement
-  schedule:
-    - cron: "0 */6 * * *" # optionnel, toutes les 6h
+  workflow_dispatch: # permet de lancer manuellement depuis GitHub Actions
 
 jobs:
-  build:
+  update:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Install deps
-        run: npm install
+      - name: Install dependencies
+        run: npm install @notionhq/client
 
-      - name: Run script
-        env:
-          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
-          DB_ANIME_ID: ${{ secrets.DB_ANIME_ID }}
-          DB_FILM_ID: ${{ secrets.DB_FILM_ID }}
-          DB_SERIES_ID: ${{ secrets.DB_SERIES_ID }}
+      - name: Run stats script
         run: node update.js
 
       - name: Commit counts.json
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Update stats"
+          commit_message: Update stats
           file_pattern: counts.json
           branch: main
+          commit_user_name: github-actions
+          commit_user_email: github-actions@github.com
+          push_options: "--force" # facultatif, permet de forcer si conflit
