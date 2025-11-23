@@ -34,15 +34,11 @@ async function run() {
   const series = process.env.DB_SERIES_ID
     ? await countPages(process.env.DB_SERIES_ID)
     : 0;
-  const animation = process.env.DB_ANIMATION_ID
-    ? await countPages(process.env.DB_ANIMATION_ID)
-    : 0;
 
   const data = {
     anime,
     films,
     series,
-    animation,
     lastUpdate: new Date().toISOString(),
   };
 
