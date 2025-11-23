@@ -17,17 +17,18 @@ jobs:
           node-version: '20'
 
       - name: Install Dependencies
-        run: |
-          echo "No dependencies to install"
+        run: npm install @notionhq/client
 
       - name: Run update script
         run: node update.js
         env:
-          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-          NOTION_DB_ID: ${{ secrets.NOTION_DB_ID }}
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          DB_ANIME_ID: ${{ secrets.DB_ANIME_ID }}
+          DB_FILM_ID: ${{ secrets.DB_FILM_ID }}
+          DB_SERIES_ID: ${{ secrets.DB_SERIES_ID }}
 
-      - name: Commit results
+      - name: Commit counts.json
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Update stats"
+          commit_message: "Update counts.json"
           file_pattern: counts.json
