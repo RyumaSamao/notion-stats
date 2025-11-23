@@ -24,6 +24,12 @@ jobs:
 
       - name: Run stats script
         run: node update.js
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          DB_ANIME_ID: ${{ secrets.DB_ANIME_ID }}
+          DB_FILM_ID: ${{ secrets.DB_FILM_ID }}
+          DB_SERIES_ID: ${{ secrets.DB_SERIES_ID }}
+
 
       - name: Commit and push counts.json
         uses: stefanzweifel/git-auto-commit-action@v5
