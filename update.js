@@ -1,3 +1,4 @@
+// update.js
 const { Client } = require("@notionhq/client");
 const fs = require("fs");
 
@@ -6,6 +7,7 @@ const notion = new Client({
 });
 
 async function countPages(dbId) {
+  if (!dbId) return 0;
   let hasMore = true;
   let nextCursor = undefined;
   let total = 0;
@@ -25,15 +27,9 @@ async function countPages(dbId) {
 }
 
 async function run() {
-  const anime = process.env.DB_ANIME_ID
-    ? await countPages(process.env.DB_ANIME_ID)
-    : 0;
-  const films = process.env.DB_FILM_ID
-    ? await countPages(process.env.DB_FILM_ID)
-    : 0;
-  const series = process.env.DB_SERIES_ID
-    ? await countPages(process.env.DB_SERIES_ID)
-    : 0;
+  const anime = await countPages(process.env.DB_ANIME_ID);
+  const films = await countPages(process.env.DB_FILM_ID);
+  const series = await countPages(process.env.DB_SERIES_ID);
 
   const data = {
     anime,
