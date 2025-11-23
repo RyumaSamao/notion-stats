@@ -27,5 +27,5 @@ jobs:
           file_pattern: counts.json
           commit_message: "Update stats"
           branch: main
-          repository: RyumaSamao/notion-stats
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_user_name: github-actions
+          commit_user_email: github-actions@github.com
