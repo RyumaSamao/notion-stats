@@ -32,9 +32,8 @@ jobs:
           DB_SERIES_ID: ${{ secrets.DB_SERIES_ID }}
         run: node stats.js
 
-      # Sauvegarder counts.json comme artefact
-      - name: Upload counts.json as artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: counts-json
-          path: counts.json
+- name: Upload counts.json as artifact
+  uses: actions/upload-artifact@v4
+  with:
+    name: counts-json
+    path: counts.json
