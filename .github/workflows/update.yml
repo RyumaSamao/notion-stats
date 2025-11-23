@@ -1,40 +1,33 @@
 name: Update Notion Stats
 
 on:
-  schedule:
-    - cron: "0 * * * *" # toutes les heures
   workflow_dispatch:
 
 jobs:
-  build:
+  update:
     runs-on: ubuntu-latest
-
     steps:
-      # Récupérer le repo
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      # Installer Node.js
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      # Installer les dépendances
-      - name: Install dependencies
-        run: npm install
+      - name: Install deps
+        run: npm install @notionhq/client
 
-      # Lancer stats.js
-      - name: Run stats.js
+      - name: Run script
+        run: node stats.js
         env:
           NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
           DB_ANIME_ID: ${{ secrets.DB_ANIME_ID }}
           DB_FILM_ID: ${{ secrets.DB_FILM_ID }}
           DB_SERIES_ID: ${{ secrets.DB_SERIES_ID }}
-        run: node stats.js
 
-      # Sauvegarder counts.json comme artefact
-      - name: Upload counts.json as artifact
+      - name: Upload result
         uses: actions/upload-artifact@v4
         with:
-          name: counts-json
+          name: counts
           path: counts.json
