@@ -1,11 +1,33 @@
-- name: Commit and push counts.json
-  uses: stefanzweifel/git-auto-commit-action@v5
-  with:
-    file_pattern: counts.json
-    commit_message: "Update stats"
-    branch: main
-    commit_user_name: github-actions
-    commit_user_email: github-actions@github.com
-    repository: ${{ github.repository }}
-    push_options: --force
-    token: ${{ secrets.GH_TOKEN }}
+name: Update Notion Stats
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run stats script
+        run: node update.js
+
+      - name: Commit and push counts.json
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          file_pattern: counts.json
+          commit_message: "Update stats"
+          branch: main
+          push_options: --force
+          commit_user_name: github-actions
+          commit_user_email: github-actions@github.com
+          repository: https://x-access-token:${{ secrets.TokenGraph }}@github.com/RyumaSamao/notion-stats.git
