@@ -4,30 +4,30 @@ on:
   workflow_dispatch:
 
 jobs:
-  update:
+  build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: '20'
 
-      - name: Install deps
-        run: npm install @notionhq/client
+      - name: Install Dependencies
+        run: |
+          echo "No dependencies to install"
 
-      - name: Run script
-        run: node stats.js
+      - name: Run update script
+        run: node update.js
         env:
-          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
-          DB_ANIME_ID: ${{ secrets.DB_ANIME_ID }}
-          DB_FILM_ID: ${{ secrets.DB_FILM_ID }}
-          DB_SERIES_ID: ${{ secrets.DB_SERIES_ID }}
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DB_ID: ${{ secrets.NOTION_DB_ID }}
 
-      - name: Upload result
-        uses: actions/upload-artifact@v4
+      - name: Commit results
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          name: counts
-          path: counts.json
+          commit_message: "Update stats"
+          file_pattern: counts.json
