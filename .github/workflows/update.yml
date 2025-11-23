@@ -28,10 +28,10 @@ jobs:
           DB_SERIES_ID: ${{ secrets.DB_SERIES_ID }}
         run: node stats.js
 
-     - name: Commit results
+- name: Commit results
   run: |
     git config user.email "bot@github.com"
     git config user.name "GitHub Bot"
     git add counts.json
     git commit -m "Update stats" || echo "No changes"
-    git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
+    git push "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:main
