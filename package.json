@@ -1,7 +1,8 @@
 {
   "name": "notion-stats",
   "version": "1.0.0",
+  "type": "commonjs",
   "dependencies": {
-    "@notionhq/client": "^3.0.0"
+    "@notionhq/client": "^3.9.0"
   }
 }
