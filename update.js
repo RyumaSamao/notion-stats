@@ -1,8 +1,10 @@
-const { Client } = require("@notionhq/client");
-const fs = require("fs");
+// update.js
+
+import fs from "fs";
+import { Client } from "@notionhq/client";
 
 const notion = new Client({
-  auth: process.env.NOTION_API_KEY,
+  auth: process.env.NOTION_API_KEY
 });
 
 async function countPages(dbId) {
@@ -13,7 +15,7 @@ async function countPages(dbId) {
   while (hasMore) {
     const res = await notion.databases.query({
       database_id: dbId,
-      start_cursor: nextCursor,
+      start_cursor: nextCursor
     });
 
     total += res.results.length;
@@ -25,24 +27,19 @@ async function countPages(dbId) {
 }
 
 async function run() {
-  const anime = process.env.DB_ANIME_ID
-    ? await countPages(process.env.DB_ANIME_ID)
-    : 0;
-  const films = process.env.DB_FILM_ID
-    ? await countPages(process.env.DB_FILM_ID)
-    : 0;
-  const series = process.env.DB_SERIES_ID
-    ? await countPages(process.env.DB_SERIES_ID)
-    : 0;
+  const anime = await countPages(process.env.DB_ANIME_ID);
+  const films = await countPages(process.env.DB_FILM_ID);
+  const series = await countPages(process.env.DB_SERIES_ID);
 
   const data = {
     anime,
     films,
     series,
-    lastUpdate: new Date().toISOString(),
+    lastUpdate: new Date().toISOString()
   };
 
   fs.writeFileSync("counts.json", JSON.stringify(data, null, 2));
+  console.log("counts.json mis à jour !");
 }
 
 run();
