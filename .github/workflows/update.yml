@@ -2,7 +2,7 @@ name: Update Notion Stats
 
 on:
   schedule:
-    - cron: "0 * * * *"   # toutes les heures
+    - cron: "0 * * * *" # toutes les heures
   workflow_dispatch:
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Lancer le script stats.js
+      # Lancer stats.js
       - name: Run stats.js
         env:
           NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
@@ -32,13 +32,9 @@ jobs:
           DB_SERIES_ID: ${{ secrets.DB_SERIES_ID }}
         run: node stats.js
 
-      # Commit et push automatique avec la bonne syntaxe
-      - name: Commit and push counts.json
-        uses: stefanzweifel/git-auto-commit-action@v4
+      # Sauvegarder counts.json comme artefact
+      - name: Upload counts.json as artifact
+        uses: actions/upload-artifact@v3
         with:
-          commit_message: Update counts.json
-          branch: main
-          file_pattern: counts.json
-          commit_user_name: GitHub Actions
-          commit_user_email: actions@github.com
-          skip_dirty_check: true
+          name: counts-json
+          path: counts.json
