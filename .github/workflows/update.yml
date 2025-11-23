@@ -27,5 +27,3 @@ jobs:
           file_pattern: counts.json
           commit_message: "Update stats"
           branch: main
-          commit_user_name: "GitHub Actions"
-          commit_user_email: "41898282+github-actions[bot]@users.noreply.github.com"
