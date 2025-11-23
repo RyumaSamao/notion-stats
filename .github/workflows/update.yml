@@ -1,34 +1,36 @@
 name: Update Notion Stats
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # exécutable à la main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: 18
 
-      - name: Install Dependencies
-        run: npm install @notionhq/client
+      - name: Install dependencies
+        run: npm install
 
-      - name: Run update script
-        run: node update.js
+      - name: Run update.js
         env:
           NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
           DB_ANIME_ID: ${{ secrets.DB_ANIME_ID }}
           DB_FILM_ID: ${{ secrets.DB_FILM_ID }}
           DB_SERIES_ID: ${{ secrets.DB_SERIES_ID }}
+        run: node update.js
 
       - name: Commit counts.json
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "Update counts.json"
           file_pattern: counts.json
+          branch: main
+          commit_user_name: GitHub Bot
+          commit_user_email: bot@github.com
