@@ -32,5 +32,7 @@ jobs:
           commit_message: "Update stats"
           branch: main
           commit_user_name: github-actions
-          commit_user_email: github-actions@github.com
+          commit_user_email: github-actions@users.noreply.github.com
           push_options: --force
+          repository: RyumaSamao/notion-stats
+          token: ${{ secrets.GITHUB_TOKEN }}
