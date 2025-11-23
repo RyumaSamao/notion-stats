@@ -26,7 +26,7 @@ jobs:
           DB_ANIME_ID: ${{ secrets.DB_ANIME_ID }}
           DB_FILM_ID: ${{ secrets.DB_FILM_ID }}
           DB_SERIES_ID: ${{ secrets.DB_SERIES_ID }}
-        run: node stats.js
+        run: node stats.mjs
 
       - name: Commit results
         run: |
